@@ -41,6 +41,18 @@ module.exports = (env, options) => {
             'css-loader',
             'sass-loader',
           ],
+        },
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: {
+            loader: 'elm-webpack-loader',
+            options: {
+              debug: devMode,
+              pathToElm: 'node_modules/.bin/elm',
+              optimize: options.mode === 'production'
+            }
+          }
         }
       ]
     },
