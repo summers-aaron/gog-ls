@@ -1,7 +1,5 @@
-const elm = require('../../src/Page/Index.elm');
-console.log(elm)
+const elm = require('../../src/Page/Index/Main.elm');
 
 window.initElm = function (params) {
-    const app = elm.Elm.Page.Index.init(params);
+    const app = elm.Elm.Page.Index.Main.init(params);
 }
-    

@@ -13,6 +13,14 @@ defmodule GoglsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GoglsWeb.Schema
+
+    forward "/", Absinthe.Plug, schema: GoglsWeb.Schema
+  end
+
   scope "/", GoglsWeb do
     pipe_through :browser
 

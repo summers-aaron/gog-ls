@@ -1,10 +1,13 @@
-module Page.Index exposing (main)
+module Page.Index.Main exposing (main)
 
 import Browser
+import Game
 import Html exposing (..)
-import Html.Attributes as Attributes exposing (class, for, id, placeholder, src, step, type_, value)
+import Html.Attributes as Attributes exposing (class, for, href, id, placeholder, src, step, type_, value)
 import Html.Events exposing (onInput)
 import List
+import Page.Index.Query as Query
+import Types exposing (Game)
 
 
 
@@ -32,16 +35,22 @@ type alias Flags =
 
 type alias Model =
     { pageTitle : String
+    , maxPrice : Int
+    , minPrice : Int
     , search : String
+    , games : List Game
     }
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( { search = ""
+      , maxPrice = 1000
+      , minPrice = 0
       , pageTitle = flags.title
+      , games = []
       }
-    , Cmd.none
+    , Query.listGames GamesLoaded
     )
 
 
@@ -51,6 +60,9 @@ init flags =
 
 type Msg
     = SearchInput String
+    | MaxPriceInput String
+    | MinPriceInput String
+    | GamesLoaded Query.GamesResult
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -58,6 +70,25 @@ update msg model =
     case msg of
         SearchInput string ->
             ( { model | search = string }, Cmd.none )
+
+        MaxPriceInput price ->
+            ( { model | maxPrice = String.toInt price |> Maybe.withDefault 0 }, Cmd.none )
+
+        MinPriceInput price ->
+            ( { model | minPrice = String.toInt price |> Maybe.withDefault 0 }, Cmd.none )
+
+        GamesLoaded result ->
+            case result of
+                Ok games ->
+                    ( { model | games = games.games }, Cmd.none )
+
+                -- TODO impletment error toast
+                Err e ->
+                    let
+                        _ =
+                            Debug.log "Error" e
+                    in
+                    ( model, Cmd.none )
 
 
 
@@ -107,7 +138,7 @@ body model =
                 [ class "filters" ]
                 [ div
                     []
-                    [ rangeInput
+                    [ rangeInput model
                     , filterSet "Features" featureFilters
                     , filterSet "System" systemFilters
                     , filterSet "Language" languageFilters
@@ -115,7 +146,7 @@ body model =
                 ]
             , div
                 [ class "games" ]
-                testGamesList
+                (List.map gameCard model.games)
             ]
         ]
     , footer [] []
@@ -146,8 +177,8 @@ filterSet groupName filters =
 -- TODO make range input dynamic
 
 
-rangeInput : Html Msg
-rangeInput =
+rangeInput : Model -> Html Msg
+rangeInput model =
     p
         []
         [ label
@@ -157,18 +188,22 @@ rangeInput =
         , input
             [ id "range"
             , type_ "range"
-            , Attributes.max "0"
-            , Attributes.min "1000"
+            , Attributes.max "1000"
+            , Attributes.min "0"
             , step "1"
+            , value (String.fromInt model.minPrice)
+            , onInput MinPriceInput
             ]
             []
         , text "max"
         , input
             [ id "range"
             , type_ "range"
-            , Attributes.max "0"
-            , Attributes.min "1000"
+            , Attributes.max "1000"
+            , Attributes.min "0"
             , step "1"
+            , value (String.fromInt model.maxPrice)
+            , onInput MaxPriceInput
             ]
             []
         ]
@@ -227,37 +262,21 @@ languageFilters =
     ]
 
 
-testGamesList : List (Html Msg)
-testGamesList =
-    [ gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    , gameCard
-    ]
-
-
-gameCard : Html Msg
-gameCard =
+gameCard : Game -> Html Msg
+gameCard game =
     div
         [ class "card" ]
         [ img
             -- Use a static image from GOG for testing
-            [ src "" ]
+            [ src <| Game.imageUrl game ]
             []
         , div
             [ class "card-description" ]
-            [ div
-                []
-                [ text "The Elder Scrolls III: Morrowind GOTY Edition" ]
+            [ a
+                [ href <| Game.slug game ]
+                [ text game.title ]
             , div
                 [ class "price" ]
-                [ text "$19.99" ]
+                [ text ("$" ++ String.fromFloat game.price) ]
             ]
         ]
