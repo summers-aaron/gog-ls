@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :gogls, Gogls.Repo,
@@ -14,19 +14,21 @@ config :gogls, Gogls.Repo,
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
-# with webpack to recompile .js and .css sources.
+# with esbuild to bundle .js and .css sources.
 config :gogls, GoglsWeb.Endpoint,
-  http: [port: 4000],
-  debug_errors: true,
-  code_reloader: true,
+  # Binding to loopback ipv4 address prevents access from other machines.
+  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
+  secret_key_base: "NAisTAwhoK/0NjhhmCqrb3dq8mqQS77VPLgdckRr2p+0+pgfsjKt2kYGS/11cWuN",
   watchers: [
+    # Start esbuild with custom script and plugins
     node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      "build.js",
+      cd: Path.expand("../assets", __DIR__),
+      env: %{"ESBUILD_LOG_LEVEL" => "silent", "ESBUILD_WATCH" => "1"}
     ]
   ]
 
