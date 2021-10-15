@@ -1,7 +1,9 @@
-/* This file is for your main application css. */
-@import "./phoenix.css";
+/* This file is for your main application CSS */
+// @import "./phoenix.css";
+@import "../node_modules/hiq/dist/hiq.min.css";
+@import "./variables.css";
 
-/* Alerts and form errors */
+/* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;
   margin-bottom: 20px;
@@ -33,4 +35,140 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
+}
+
+/* LiveView specific classes for your customization */
+.phx-no-feedback.invalid-feedback,
+.phx-no-feedback .invalid-feedback {
+  display: none;
+}
+
+.phx-click-loading {
+  opacity: 0.5;
+  transition: opacity 1s ease-out;
+}
+
+.phx-disconnected {
+  cursor: wait;
+}
+.phx-disconnected * {
+  pointer-events: none;
+}
+
+.phx-modal {
+  opacity: 1 !important;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.phx-modal-content {
+  background-color: #fefefe;
+  margin: 15vh auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.phx-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.phx-modal-close:hover,
+.phx-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+main {
+  max-width: 1060px;
+  height: 100%;
+}
+.nav {
+  margin-bottom: 3rem;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  padding: 0.5rem;
+  font-weight: var(--hiq-font-weight-semibold);
+}
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 3rem;
+  .select-filter {
+    max-width: 25%;
+  }
+}
+.index {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas: "filters games";
+  grid-template-columns: 1fr 4fr;
+}
+.filters {
+  grid-area: filters;
+}
+.games {
+  grid-area: games;
+  display: flex;
+  flex-wrap: wrap;
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    border-radius: var(--hiq-border-radius);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 0 24px 24px;
+    width: calc(33.33333% - 24px);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+    a {
+      color: unset;
+    }
+    img {
+      border-radius: unset;
+    }
+    &-description {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 100%;
+      .price {
+        display: flex;
+        flex-direction: row-reverse;
+        font-weight: var(--hiq-font-weight-semibold);
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .games {
+    .card {
+      width: calc(50% - 8px);
+      margin: 0 0 8px 8px;
+    }
+  }
 }
