@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "esbuild": "^0.15.14",
+    "esbuild-plugin-elm": "^0.0.11-1",
+    "esbuild-plugin-sass": "^1.0.1",
+    "hiq": "^2.0.0"
+  }
+}
