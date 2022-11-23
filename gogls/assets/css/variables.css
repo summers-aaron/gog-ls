@@ -2,7 +2,7 @@
 
 :root {
   /* gray palette */
-  --hiq-color-gray-1: hsl(220, 10%, 5%);
+  --hiq-color-gray-1: hsl(220, 12%, 5%);
   --hiq-color-gray-2: hsl(220, 10%, 10%);
   --hiq-color-gray-3: hsl(220, 10%, 20%);
   --hiq-color-gray-4: hsl(220, 10%, 40%);
@@ -12,7 +12,8 @@
   --hiq-color-gray-8: hsl(220, 10%, 98%);
 
   /* semantic palette */
-  --hiq-color-primary: hsl(210, 100%, 50%);
+  --hiq-color-primary: 	hsl(163, 18%, 50%);
+  --hiq-color-secondary: hsl(163, 18%, 60%);
   --hiq-color-success: hsl(158, 73%, 48%);
   --hiq-color-warning: hsl(46, 97%, 64%);
   --hiq-color-danger: hsl(352, 95%, 61%);

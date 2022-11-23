@@ -101,11 +101,41 @@ main {
   height: 100%;
 }
 .nav {
-  margin-bottom: 3rem;
-  background-color: #2c2c2c;
-  color: #ffffff;
-  padding: 0.5rem;
-  font-weight: var(--hiq-font-weight-semibold);
+  display: flex;
+  flex-direction: row;
+  background-color: var(--hiq-color-gray-5);
+  font-size: var(--hiq-font-size-7);
+  background-color: var(--hiq-color-primary);
+}
+.nav-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+a {
+  color: unset;
+  text-decoration: inherit;
+  outline: none;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+  outline: none;
+}
+.tab {
+  padding:  .5rem 1rem;
+  display: flex;
+  color: whitesmoke;
+  transition: var(--hiq-easing);
+  // &.enabled {
+  //   background-color: black;
+  // }
+  &:hover {
+    background-color: var(--hiq-color-secondary);
+  }
+}
+
+.home-icon {
+
 }
 .search {
   display: flex;
