@@ -2,6 +2,9 @@ module Pages.Clients exposing (Model, Msg, page)
 
 import Effect exposing (Effect)
 import Gen.Params.Clients exposing (Params)
+import Gen.Route
+import Html exposing (button, div, text)
+import Html.Events exposing (onClick)
 import Page
 import Request
 import Shared
@@ -14,7 +17,7 @@ page shared req =
     Page.advanced
         { init = init
         , update = update
-        , view = view
+        , view = view shared req
         , subscriptions = subscriptions
         }
 
@@ -60,6 +63,8 @@ subscriptions model =
 -- VIEW
 
 
-view : Model -> View Msg
-view model =
-    { title = "", body = UI.layout [] }
+view : Shared.Model -> Request.With Params -> Model -> View Msg
+view shared req model =
+    { title = ""
+    , body = UI.layout shared req.route []
+    }
