@@ -1,12 +1,12 @@
-module Pages.Clients exposing (Model, Msg, page)
+module Pages.Schedule exposing (Model, Msg, page)
 
 import Effect exposing (Effect)
-import Gen.Params.Clients exposing (Params)
+import Gen.Params.Schedule exposing (Params)
 import Page
 import Request
 import Shared
-import UI
 import View exposing (View)
+import Page
 
 
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
@@ -14,7 +14,7 @@ page shared req =
     Page.advanced
         { init = init
         , update = update
-        , view = view req
+        , view = view
         , subscriptions = subscriptions
         }
 
@@ -60,8 +60,6 @@ subscriptions model =
 -- VIEW
 
 
-view : Request.With Params -> Model -> View Msg
-view req model =
-    { title = ""
-    , body = UI.layout req.route []
-    }
+view : Model -> View Msg
+view model =
+    View.placeholder "Schedule"

@@ -15,7 +15,7 @@ page shared req =
     Page.advanced
         { init = init
         , update = update
-        , view = view shared req
+        , view = view req
         , subscriptions = subscriptions
         }
 
@@ -61,8 +61,8 @@ subscriptions model =
 -- VIEW
 
 
-view : Shared.Model -> Request.With Params -> Model -> View Msg
-view shared req model =
+view : Request.With Params -> Model -> View Msg
+view req model =
     { title = ""
-    , body = UI.layout shared req.route [ text "Home" ]
+    , body = UI.layout req.route [ text "Home" ]
     }

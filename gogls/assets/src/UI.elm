@@ -6,8 +6,8 @@ import Html.Attributes exposing (class, classList, href)
 import Shared
 
 
-layout : Shared.Model -> Route -> List (Html msg) -> List (Html msg)
-layout shared route children =
+layout : Route -> List (Html msg) -> List (Html msg)
+layout route children =
     [ header
         []
         [ div [ class "navbar" ]
@@ -15,11 +15,10 @@ layout shared route children =
             , div
                 [ class "nav-tabs" ]
                 [ navTab "Home" Route.Home_ route
-                , navTab "Dashboard" Route.Clients route
-                , navTab "Schedule" Route.Clients route
-                , navTab "Flow" Route.Clients route
+                , navTab "Dashboard" Route.Dashboard route
+                , navTab "Schedule" Route.Schedule route
                 , navTab "Clients" Route.Clients route
-                , navTab "Financials" Route.Clients route
+                , navTab "Financials" Route.Financials route
                 ]
             , div [] [ input [ class "search" ] [] ]
             ]
